@@ -1,0 +1,376 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block head %}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/pricePredict/price.css' %}" rel="stylesheet">
+<link href="{% static 'css/pricePredict/bootstrap-datepicker.css' %}" rel="stylesheet">
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+{% endblock head %}
+
+{% block contents %}
+    <div class ="p_Container">
+        <div class = "catagori-Nav">
+        {% for pd in pd_list %}
+        <li class="page-item">
+            {% if pd.pNo ==  product_info.pNo %}
+            <a class="select" href='../{{ pd.pNo }}'>
+                {{ pd.pName }}
+            </a>
+            {% else %}
+            <a class="non-select" href='../{{ pd.pNo }}'>
+                {{ pd.pName }}
+            </a>
+            {% endif %}
+        </li>
+        {% endfor %}
+        </div>
+        <section class = "title_section">
+            <h1>{{icon}} {{product_info.pName}}</h1>
+            <li> 대형마트 "원가" 기준</li>
+        </section>
+        <div class= "line"></div>
+        <div id = "content-area">
+            <div id = "content_1">
+                <div class = "datearea">
+                    <li>날짜를 선택해 원하는 차트를 이동해보세요👉</li>
+                    <div class = "datepicker">
+                        <input type="text" id="datePicker" value={{today.year}}-{{today.month}}-{{today.day}}>
+                    </div>
+                </div>
+                <section class ="chartarea">
+                    <div id="chartdiv"></div>
+                </section>
+            </div>
+            <div id = "content_2">
+                <div class="predict">
+                    <span class = "pre_div name_section" id = "p_Name">
+                        <p>{{product_info.pName}}</p>
+                        <div class = "heart_section">
+                          {% if isLike %}
+                          <div class="wish heart"> </div>
+                          {% else %}
+                          <div class="wish cleanheart"> </div>
+                          {% endif %}
+                          <p id="count">
+                              {{ wish_count }}
+                          </p>
+                        </div>
+                    </span>
+                    <span class = "pre_div">
+                        <h1 id ="p_Month">{{lastmonth}}</h1>
+                        <p>월 대비</p>
+                        {% if next_price > now_price %}
+                        <div id = "up_Box">
+                            <span>
+                            <p class = "icon">▼&nbsp&nbsp&nbsp</p>
+                            <h1>
+                                <script>
+                                document.write(Math.abs(Math.round({{next_price}}-{{now_price}})));
+                                </script>
+                            </h1>
+                            <p>원</p>
+                            </span>
+                            <span>
+                                <p class = "icon">▲&nbsp&nbsp&nbsp</p>
+                                <h1>
+                                    <script>
+                                    document.write(Math.abs(Math.round(({{next_price}}-{{now_price}}) / {{now_price}} * 100 * 100) /100));
+                                    </script>
+                                </h1>
+                                <p>%</p>
+                            </span>
+                        </div>
+                        {% else %}
+                        <div id = "down_Box">
+                            <span>
+                            <p class = "icon">▼&nbsp&nbsp&nbsp</p>
+                            <h1>
+                                <script>
+                                document.write(Math.abs(Math.round({{next_price}}-{{now_price}})));
+                                </script>
+                            </h1>
+                            <p>원</p>
+                            </span>
+                            <span>
+                                <p class = "icon">▼&nbsp&nbsp&nbsp</p>
+                                <h1>
+                                    <script>
+                                    document.write(Math.abs(Math.round(({{next_price}}-{{now_price}}) / {{now_price}} * 100 * 100) /100));
+                                    </script>
+                                </h1>
+                                <p>%</p>
+                            </span>
+                        </div>
+                        {% endif %}
+                        <p>예상됩니다</p>
+                    </span >
+                    <span class = "pre_div">
+                        <form name="form1">
+                              <ul id="info">
+                                <li>
+                                  <div class = "box" id = "now_price">
+                                    <label for="price"> 현재 가격(1개)</label>
+                                    <div>
+                                    <input type="text" name="price" value={{now_price}} style="width:100px; height:30px" readonly>원
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                    <div class = "box" id = "quantity_box">
+                                      <label for="quantity">수량</label>
+                                      <div class = "button-box">
+                                      <input id = "text" type="text" name="quantity" value="1" max="" style="width:100px; height:30px">
+                                      <input id = "button" type="button" value=" + " name="add">
+                                      <input id = "button" type="button" value=" - " name="minus">
+                                      </div>
+                                    </div>
+                                </li>
+                                <li>
+                                  {% if user.is_authenticated %}
+                                    <div class = "box" id = "buy_box" data-toggle="modal" data-target="#exampleModalCenter">
+                                  {% else %}    
+                                    <div class = "box" id = "buy_box">
+                                  {% endif %} 
+                                        <label for="total">구매</label>
+                                        <div class = "button-box">
+                                        <input id = "text" type="text" name="total" value="{{totalVal}}" style="width:100px; height:30px" readonly>p
+                                        </div>
+                                    </div>
+                                </li>
+                              </ul>
+                              <!-- Modal -->
+                            {% comment %} <div>
+                              {% if request.session %}
+                                <input type="submit" class="purchase" value="구매" onclick="alert('구매가 완료되었습니다.')">
+                              {% else %}
+                                <input type="button" class="login" value="구매" onclick="windows.open('../../accounts/login')">
+                              {% endif %}
+                            </div> {% endcomment %}
+                          </form>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class= "line"></div>
+        <div id="recommend-area">
+          <h2> 구매추천</h2>
+          <h6 class = "sub-title"> 해당 가격은 coupang 랭킹 기준으로 반영됩니다.</h6>
+          <div class="others" style="padding-left:50px">
+              {% for pd in crawlingdata %}
+              <div id = "product_row">
+                  <p class = "name">{{pd.pName}}</p>
+                  {% if pd.pFree == True %}
+                  <p class = "free"><u>배송비 포함</u></p>
+                  {% else %}
+                  <p class = "notfree"><u>배송비 미포함</u></p>
+                  {% endif %}
+                  <p class = "price">{{pd.price}}원</p>
+                  <input class = "button" type="button" value="구매하러 가기" onclick="window.open('{{ pd.plink }}')"><br>
+                </div>
+              {% endfor %}
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">구매</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class = "price-table">
+              <colgroup>
+                <col width = "50%">
+                <col width = "50%">
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th>보유 포인트</th>
+                  <td id = "now_p">{{ user.point }}</td>
+                </tr>
+                <tr class ="deduct">
+                  <th>차감 포인트</th>
+                  <td id = "deduct_p">{{ now_price }}</td>
+                </tr>
+                <tr class ="residual">
+                  <th>잔여 포인트</th>
+                  <td id = "remain_p">0</td>
+                </tr>
+              </tbody>
+            </table>
+            구매할까요?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <button type="button" id = "buynow" class="btn btn-primary">구매하기</button>
+          </div>
+        </div>
+      </div>
+{% endblock contents %}
+
+{% block script_section %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+{% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    let xss_str = "{{pd_data}}";
+    xss_str = xss_str.replace(/&quot;/g,'"');
+    let price_data = JSON.parse(xss_str)
+    let next_price = Math.round({{next_price}})
+    let next_date = "{{today.year}}-{{today.month}}-01"
+</script>
+<script src="{% static 'js/pricePredict/amcharts.js'%}"></script>
+<script src="{% static 'js/pricePredict/bootstrap-datepicker.js'%}"></script>
+<script>
+    const csrftoken = getCookie('csrftoken');
+	$(function() {
+		$('#datePicker').datepicker({
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    clearBtn : true, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+		    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
+		    title: "날짜 선택",	//캘린더 상단에 보여주는 타이틀
+		    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
+		    language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+		}).on("changeDate", function(e){
+
+        })
+	})
+</script>
+<script type="text/javascript">
+  const now_point = document.getElementById("now_p");
+  const deduct_price = document.getElementById("deduct_p");
+  const remain_price = document.getElementById("remain_p");
+  const formform = document.getElementsByName("form1"),
+        price = document.form1.price,
+        quantity = document.form1.quantity,
+        add = document.form1.add,
+        minus = document.form1.minus,
+        total = document.form1.total;
+
+  let quantityVal;
+  let totalVal;
+  let priceVal;
+  remain_price.innerHTML = now_point.innerHTML - deduct_price.innerHTML;
+
+  if(remain_price.innerHTML < 0){
+    remain_price.style.color = 'red';
+  }
+
+  if (formform){
+    total.value = price.value;
+
+    quantityVal = quantity.value;
+    totalVal = total.value;
+    priceVal = price.value;
+
+    if(add){
+      add.addEventListener('click', function(){
+        quantityVal++;
+        totalVal = quantityVal * priceVal;
+        quantity.value = quantityVal;
+        total.value = totalVal;
+        deduct_price.innerHTML  = totalVal;
+        remain_price.innerHTML = now_point.innerHTML - totalVal;
+        if(remain_price.innerHTML < 0){
+          remain_price.style.color = 'red';
+        }else{
+          remain_price.style.color = 'black';
+        }
+      })
+    }
+      
+    if(minus){
+      minus.addEventListener('click', function(){
+        if (quantityVal > 1){
+          quantityVal--;
+          totalVal = quantityVal * priceVal;
+          quantity.value = quantityVal;
+          total.value = totalVal;
+          deduct_price.innerHTML  = totalVal;
+          remain_price.innerHTML = now_point.innerHTML - totalVal;
+          if(remain_price.innerHTML < 0){
+            remain_price.style.color = 'red';
+          }else{
+            remain_price.style.color = 'black';
+          }
+      }else{
+        quantityVal = 1;
+        }
+      })
+    }
+  }
+</script>
+{% comment %} ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ찜하기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ {% endcomment %}
+<script type="text/javascript">
+  $(".wish").click(function () { // .like 버튼을 클릭 감지
+    {% if user.is_authenticated %}
+      $.ajax({ // ajax로 서버와 통신
+          type: "POST", // 데이터를 전송하는 방법
+          url: "./wish/", // 통신할 url을 지정
+          data: {'csrfmiddlewaretoken': '{{ csrf_token }}' }, // 서버로 데이터 전송시 옵션, pk를 넘겨야 어떤 video인지 알 수 있음
+          dataType: "json",
+          success: function (response) { // 성공
+              alert(response.message);
+              $("#count").html(response.wish_count); // 좋아요 개수 변경
+              if(response.message == "좋아요"){
+                $(".wish").attr('class', 'wish heart')
+              }else{
+                $(".wish").attr('class', 'wish cleanheart')
+              }
+          },
+          error: function (request, status, error) { // 실패
+          },   
+      });
+      {% else %}
+      window.location.replace("/accounts/login/") // 로그인 페이지로 넘어가기
+      {% endif %}
+  })
+</script>
+{% comment %} ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ구매하기ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ {% endcomment %}
+
+<script type="text/javascript">
+
+  $("#buy_box").click(function () { // .like 버튼을 클릭 감지
+    {% if not user.is_authenticated %}
+      alert("로그인이 필요한 서비스입니다.")
+      window.location.replace("/accounts/login/") // 로그인 페이지로 넘어가기
+    {% endif %}
+  });
+
+  //구매버튼 눌렀을때
+  $("#buynow").click(function () { // .like 버튼을 클릭 감지
+    {% if user.is_authenticated %}
+
+    if(remain_price.innerHTML < 0){
+      alert('포인트가 부족합니다.')
+    }else{
+      $.ajax({ // ajax로 서버와 통신
+        type: "POST", // 데이터를 전송하는 방법
+        url: "./buy/", // 통신할 url을 지정
+        data: {'quantityVal' : quantityVal,
+        'priceVal' : priceVal,
+        'csrfmiddlewaretoken': '{{ csrf_token }}' }, 
+        dataType: "json",
+        success: function (response) { // 성공
+            if(response.content){
+              alert('구매 완료되었습니다.')
+              window.location.replace("./")
+            }
+        },
+        error: function (request, status, error) { // 실패
+        },   
+      })
+    }
+    {% else  %}
+      alert("비정상적인 접근입니다.")
+    {% endif %}
+});
+</script>
+{% endblock script_section %}

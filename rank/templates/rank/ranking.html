@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+<html lang="ko">
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <title>랭킹</title>
+    <meta charset="utf-8" />
+    <style>
+        h2{ text-align: center;! }
+        span{color:black}
+        body{font-family: 'Noto Sans KR', sans-serif !important;}
+        .page-item.active .page-link{background-color:#d9e6e9 !important; border:0;}
+        .header-of-page {height:80px;}
+    </style>
+{% endblock head %}
+{% block contents %}
+<div class="container" style="margin-top:150px;">
+    <div class="row">
+        <div class="col-auto mr-auto">
+        </div>
+    </div>
+    <h2>랭킹</h2>
+    <table class="table" style="margin-top:20px;">
+        <div>
+            <tr class="text-center">
+                <th scope="col">순위</th>
+                <th scope="col">아이디</th>
+                <th scope="col">포인트</th>
+            </tr>
+        </div>
+        <tbody>
+            {% csrf_token %}
+            {% for Ranking in ranking_object %}
+                <tr class="text-center">
+                    <th scope="row">
+                        <span>{{ forloop.counter }}</span>
+                    </th>
+                    <td>
+                        <span>{{ Ranking.username }}</span>
+                    </td>
+                    <td>
+                        <span>{{ Ranking.point }}</span>
+                    </td>
+                </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock contents %}

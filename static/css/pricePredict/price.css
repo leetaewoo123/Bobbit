@@ -1,0 +1,439 @@
+.p_Container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 4rem;
+}
+
+
+.p_Container .title_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.p_Container .title_section h1 {
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.p_Container .title_section li {
+    margin: 0.2rem 0;
+    font-size: 0.6rem;
+}
+
+
+.p_Container .catagori-Nav {
+    display: flex;
+    flex-direction: row;
+    padding: 3rem 0 1rem 0;
+}
+
+.p_Container .catagori-Nav li {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+    border-right: 2px solid rgb(0, 0, 0, 0.2)
+}
+
+.p_Container .catagori-Nav li .select {
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.p_Container .catagori-Nav li .non-select {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: #337D6B;
+    transition: 0.5s;
+}
+
+.p_Container .catagori-Nav li .non-select:hover {
+    color: black;
+}
+
+.p_Container .chartarea {
+    width: 40rem;
+}
+
+.p_Container #chartdiv {
+    width: 100%;
+    height: 500px;
+}
+
+.p_Container .line {
+    width: 100%;
+    border: solid 2px rgba(0, 0, 0, 0.1)
+}
+
+
+#content-area {
+    display: flex;
+    flex-direction: row;
+}
+
+#content-area #content_1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+#content-area #content_1 .datearea {
+    display: flex;
+    justify-content: end;
+}
+
+#content-area #content_1 .datearea li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+
+#content-area #content_2 {
+    flex: 1;
+    margin: 1rem;
+    padding: 3rem 5rem;
+}
+
+#content-area #content_2 .predict {
+    display: flex;
+    flex-direction: column;
+}
+
+#content-area #content_2 span {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.predict .pre_div {
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.predict span #p_Month {
+    position: relative;
+    top: -10px;
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+.predict #p_Name {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.predict .name_section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.predict .name_section .heart_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.predict .name_section .heart_section #count {
+    margin: 0.1rem 0 0 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Down Box */
+.predict #down_Box {
+    position: relative;
+    top: -10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 2rem;
+}
+
+.predict #down_Box h1 {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: #929CE6;
+}
+
+.predict #down_Box .icon {
+    margin: 0;
+    line-height: 4rem;
+    color: #929CE6;
+}
+
+.predict #down_Box p {
+    margin: 0;
+    margin: 1.5rem 0 0 0.5rem;
+}
+
+/* Up Box */
+
+.predict #up_Box {
+    position: relative;
+    top: -10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 2rem;
+}
+
+.predict #up_Box h1 {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: #9E4747;
+}
+
+.predict #up_Box .icon {
+    margin: 0;
+    line-height: 4rem;
+    color: #9E4747;
+}
+
+.predict #up_Box p {
+    margin: 0;
+    margin: 1.5rem 0 0 0.5rem;
+}
+
+#info .box {
+    height: 2.2rem;
+    width: 20rem;
+    padding: 2.5px 10px;
+    margin: 0 0 10px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#info #quantity_box {
+    background-color: #EEEEEE;
+}
+
+#info #buy_box {
+    cursor: pointer;
+    color: white;
+    background-color: #1B555B;
+    transition: 0.2s;
+    border: none;
+}
+
+#info .box div {
+    font-size: 0.8rem;
+}
+
+#info .box .button-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#info .box input {
+    text-align: right;
+
+}
+
+#info #now_price input {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+#info #quantity_box input {
+    background-color: #EEEEEE;
+}
+
+#info #quantity_box label {
+    color: #808080;
+    font-weight: 400;
+}
+
+#info #quantity_box #text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+#info #quantity_box #button {
+    background-color: white;
+    margin: 0 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: 0.1s;
+}
+
+#info #quantity_box #button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#info #buy_box input {
+    background-color: #1B555B;
+    cursor: pointer;
+}
+
+#info #buy_box label {
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+#info #buy_box #text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+#recommend-area {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    margin-bottom: 30rem;
+}
+
+#recommend-area .sub-title {
+    padding: 0;
+    margin: 1rem 0;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+#recommend-area .others {
+    display: flex;
+    flex-direction: column;
+}
+
+#recommend-area #product_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#product_row p {
+    margin: 0 2rem;
+}
+
+#product_row .name {
+    width: 20rem;
+}
+
+#product_row .price {
+    width: 8rem;
+    text-align: right;
+}
+
+#product_row .notfree {
+    color: rgba(0, 0, 0, 0.5)
+}
+
+
+#product_row input {
+    background-color: #D9E6E9;
+    width: 12rem;
+    height: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.1s;
+    margin-left: 5rem;
+    border-radius: 5px;
+}
+
+#product_row input:hover {
+    background-color: #516b70;
+    color: white;
+}
+
+.price-table {
+    table-layout: fixed;
+    width: 100%;
+    border: 4px solid #e6e6e6;
+}
+
+.price-table tr th {
+    border-right: 1px solid #dcdcdc;
+    background-color: #f0f0f0;
+}
+
+.price-table tr th,
+.price-table tr td {
+    text-align: center;
+    height: 50px;
+    font-size: 18px;
+    line-height: 18px;
+    color: #000;
+    vertical-align: middle;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#heart_section {
+    margin-top: 1rem;
+}
+
+.heart {
+    cursor: pointer;
+    margin-left: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    background-color: #ea2027;
+    position: relative;
+    transform: rotate(45deg);
+}
+
+.heart::before,
+.heart::after {
+    cursor: pointer;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #ea2027;
+}
+
+.heart::before {
+    left: -50%;
+}
+
+.heart::after {
+    top: -50%;
+}
+
+.cleanheart {
+    cursor: pointer;
+    margin-left: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    transform: rotate(45deg);
+    background-color: #d3aeaf;
+}
+
+.cleanheart::before,
+.cleanheart::after {
+    cursor: pointer;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #d3aeaf;
+}
+
+.cleanheart::before {
+    left: -50%;
+}
+
+.cleanheart::after {
+    top: -50%;
+}
